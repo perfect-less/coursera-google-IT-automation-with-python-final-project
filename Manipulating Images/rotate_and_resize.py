@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+"""In this case, the image files did not have any extensions. It originally in tiff format
+and need to be converte to RGB first before saved into JPEG format"""
+
 import sys
 import os
 
 from PIL import Image
 
+# Convertion Settings
 original_file_dir  = os.path.join(os.getcwd(), 'images/')
 processed_file_dir = "/opt/icons/"
 
@@ -12,27 +16,31 @@ new_width  = 128
 new_height = 128
 
 
-def rotate_and_resize_image(filepath, newpath):
+def rotate_and_resize_image(filepath, newpath, new_format='jpeg'):
     """Open image file at [filepath], rotate and resize it 
     and then save it as new file to [newpath] """
-    image = Image.open(filepath)
-
     # return rotated and resized image
     try:
-        image.rotate (image_rotation).resize(
-                (
-                    new_width,
-                    new_height
+        image = Image.open(filepath)
+        image = image.rotate (image_rotation).resize(
+                    (
+                        new_width,
+                        new_height
+                    )
+                ).convert(
+                        'RGB'
+                ).save(
+                        newpath, 
+                        new_format
                 )
-            ).save (
-                newpath
-            )
         print ('  SUCCESFULLY rotated and resized{}'.format (os.path.split(filepath)[-1]))
-    except:
+        
+    except Exception as e:
         print ('FAILED to resize {}'.format (os.path.split(filepath)[-1]))
+        print (e)
 
 
-def process_images(ori_dir, new_dir, old_format="tiff", new_format="jpeg"):
+def process_images(ori_dir, new_dir):
     """List all image files on the ori_dir and then save
     a new rotated and resized version of it to new_dir"""
     images = os.listdir(ori_dir)
@@ -44,7 +52,7 @@ def process_images(ori_dir, new_dir, old_format="tiff", new_format="jpeg"):
         
         rotate_and_resize_image (
                 os.path.join(ori_dir, image_name),
-                os.path.join(new_dir, image_name[:-len(old_format)]+new_format) 
+                os.path.join(new_dir, image_name) 
             )
 
 
