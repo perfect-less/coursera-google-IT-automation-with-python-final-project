@@ -131,3 +131,7 @@ dmypy.json
 # VSCode Folder
 .vscode/
 
+# Folders
+Manipulating\ Images/images/
+Manipulating\ Images/processedFiles/
+
