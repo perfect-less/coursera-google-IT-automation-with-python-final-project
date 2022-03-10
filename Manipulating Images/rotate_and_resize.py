@@ -16,7 +16,7 @@ new_width  = 128
 new_height = 128
 
 
-def rotate_and_resize_image(filepath, newpath, new_format='jpeg'):
+def rotate_and_resize_image(filepath, newpath, new_format='jpeg', new_mode='RGB'):
     """Open image file at [filepath], rotate and resize it 
     and then save it as new file to [newpath] """
     # return rotated and resized image
@@ -27,12 +27,13 @@ def rotate_and_resize_image(filepath, newpath, new_format='jpeg'):
                         new_width,
                         new_height
                     )
-                ).convert(
-                        'RGB'
-                ).save(
-                        newpath, 
-                        new_format
                 )
+
+        if image.mode != new_mode:
+            image = image.convert(new_mode)
+
+        image.save(newpath, new_format)
+        
         print ('  SUCCESFULLY rotated and resized{}'.format (os.path.split(filepath)[-1]))
         
     except Exception as e:
