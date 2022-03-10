@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""This is my own attempt on writing script to send email with attachments."""
 
 import mimetypes
 import smtplib
@@ -8,7 +9,7 @@ import os
 
 from email.message import EmailMessage
 
-
+# Email contents and parameter
 sender      = "sender.email@mail.com"
 receiver    = "receiver.email@mail.com"
 
@@ -18,7 +19,6 @@ email_body  = """Hi, There
 And this is the body (contents) of the email."""
 
 attachment_path = 'attachments/cool_picture.jpg'
-
 
 
 def ProcessAttachment(attachment_path):
