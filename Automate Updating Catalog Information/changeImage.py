@@ -49,12 +49,17 @@ def process_images(ori_dir: str, new_dir: str, old_extension='.tiff', new_extens
         if not os.path.isfile (os.path.join(ori_dir, image_name)):
             continue
 
-        if not ori_dir.endswith(old_extension):
+        if not image_name.endswith(old_extension):
             continue
         
+        if len (old_extension) > 0:
+            new_image_name = image_name[:-len(old_extension)]+new_extension
+        else:
+            new_image_name = image_name+new_extension
+
         rotate_and_resize_image (
                 os.path.join(ori_dir, image_name),
-                os.path.join(new_dir, image_name.removesuffix(old_extension)+new_extension) 
+                os.path.join(new_dir, new_image_name) 
             )
 
 
