@@ -98,7 +98,7 @@ def main(argv):
     # TODO: send the PDF report as an email attachment
     message = emails.generate(
         sender="automation@example.com",
-        recipient="student-02-cc33d5045608@example.com",
+        recipient="username@example.com",
         subject="Sales summary for last month",
         body="\n".join(summary),
         attachment_path="cars.pdf"
