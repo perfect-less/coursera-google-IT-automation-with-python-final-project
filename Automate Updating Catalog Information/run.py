@@ -5,8 +5,8 @@ import sys
 import requests
 
 
-REQUEST_URL  = 'http://<corpweb-external-IP>/feedback/'
-FEEDBACK_DIR = '/data/feedback'
+REQUEST_URL  = 'http://<corpweb-external-IP>/fruits/'
+CONTENTS_DIR = 'supplier-data/descriptions/'
 
 
 
@@ -17,10 +17,10 @@ def parse_file(filepath) -> dict:
     with open(filepath, 'r') as file_content:
         lines = file_content.readlines()
 
-        data_to_send["title"]       = lines[0].strip()
-        data_to_send["name"]        = lines[1].strip()
-        data_to_send["date"]        = lines[2].strip()
-        data_to_send["feedback"]    = lines[3].strip()
+        data_to_send["name"]        = lines[0].strip()
+        data_to_send["weight"]      = int(lines[1].strip().removesuffix('lbs'))
+        data_to_send["description"] = lines[2].strip()
+        data_to_send["image_name"]  = os.path.basename(filepath)
 
     file_content.close()
     return data_to_send
@@ -36,14 +36,14 @@ def send_request(data_to_send):
 
 
 def main():
-    """List files in the FEEDBACK_DIR, parse each of
+    """List files in the CONTENTS_DIR, parse each of
     them into dictionary and then send request to 
     the web API."""
     # Listing files in directory
-    files = os.listdir (FEEDBACK_DIR)
+    files = os.listdir (CONTENTS_DIR)
 
     for filename in files:
-        filepath = os.path.join (FEEDBACK_DIR, filename)
+        filepath = os.path.join (CONTENTS_DIR, filename)
 
         # Only process txt files
         if not filepath.endswith('.txt'):
