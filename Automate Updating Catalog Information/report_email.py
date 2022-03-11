@@ -19,8 +19,8 @@ def MakeContent(files_dir):
             continue
 
         with open (os.path.join(files_dir, filename), 'r') as txt_file:
-            content += txt_file.readline() + "\n"
-            content += txt_file.readline() + "\n"
+            content += "name: " + txt_file.readline() + "\n"
+            content += "weight: " + txt_file.readline() + "\n"
         txt_file.close()
         content += "\n"
     
@@ -35,7 +35,7 @@ def main():
     # Create report
     reports.generate_report(
         '/tmp/processed.pdf', 
-        "Processed Update on {}".format(datetime.date.today()),
+        "Processed Update on {}".format(datetime.date.today().strftime("%B %d, %Y")),
         content.replace('\n', '<br/>')
     )
 
