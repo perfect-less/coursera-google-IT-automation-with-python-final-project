@@ -9,6 +9,11 @@ REQUEST_URL  = 'http://<corpweb-external-IP>/fruits/'
 CONTENTS_DIR = 'supplier-data/descriptions/'
 
 
+def remove_suffix(string: str, suff: str):
+    if len (suff) > 0:
+        return string[:-len(suff)]
+    return string
+
 
 def parse_file(filepath) -> dict:
     """Read the given file and return its contents as dictionary"""
@@ -18,9 +23,9 @@ def parse_file(filepath) -> dict:
         lines = file_content.readlines()
 
         data_to_send["name"]        = lines[0].strip()
-        data_to_send["weight"]      = int(lines[1].strip().removesuffix('lbs'))
+        data_to_send["weight"]      = int(remove_suffix(lines[1].strip(), 'lbs'))
         data_to_send["description"] = lines[2].strip()
-        data_to_send["image_name"]  = os.path.basename(filepath)
+        data_to_send["image_name"]  = os.path.basename(remove_suffix (filepath, 'txt')+'jpeg')
 
     file_content.close()
     return data_to_send
