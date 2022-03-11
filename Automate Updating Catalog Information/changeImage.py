@@ -39,7 +39,7 @@ def rotate_and_resize_image(filepath, newpath, new_format='jpeg', new_mode='RGB'
         print (e)
 
 
-def process_images(ori_dir, new_dir, old_extension='.tiff', new_extension='.jpeg'):
+def process_images(ori_dir: str, new_dir: str, old_extension='.tiff', new_extension='.jpeg'):
     """List all image files on the ori_dir and then save
     a new resized version of it to new_dir"""
     images = os.listdir(ori_dir)
@@ -47,6 +47,9 @@ def process_images(ori_dir, new_dir, old_extension='.tiff', new_extension='.jpeg
     for image_name in images:
 
         if not os.path.isfile (os.path.join(ori_dir, image_name)):
+            continue
+
+        if not ori_dir.endswith(old_extension):
             continue
         
         rotate_and_resize_image (
